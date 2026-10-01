@@ -39,5 +39,7 @@ function createDataset(fields, constraints, sortFields) {
     ds.addRow(rows[i]);
   }
 
+  console.dir(ds);
+
   return ds;
 }
