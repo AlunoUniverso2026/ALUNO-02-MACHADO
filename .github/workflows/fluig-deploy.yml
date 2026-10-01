@@ -97,7 +97,7 @@ jobs:
 
       - name: Login no GHCR
         if: steps.datasets.outputs.paths != ''
-        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USERNAME }}" --password-stdin
 
 
       - name: Baixar imagem do Fluig CLI
