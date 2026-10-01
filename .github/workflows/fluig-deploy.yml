@@ -95,25 +95,9 @@ jobs:
         if: steps.datasets.outputs.paths == ''
         run: echo "Nenhum dataset alterado."
 
-      - name: Diagnóstico de secrets
-        if: steps.datasets.outputs.paths != ''
-        env:
-          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
-          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
-        run: |
-          echo "GHCR_USERNAME length: ${#GHCR_USERNAME}"
-          echo "GHCR_TOKEN length: ${#GHCR_TOKEN}"
-          if [ -z "$GHCR_USERNAME" ] || [ -z "$GHCR_TOKEN" ]; then
-            echo "::error::Secrets GHCR nao chegaram ao workflow. Verifique visibilidade/escopo das organization secrets e a visibilidade (publica) do repositorio."
-            exit 1
-          fi
-
       - name: Login no GHCR
         if: steps.datasets.outputs.paths != ''
-        env:
-          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
-          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
-        run: echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USERNAME }}" --password-stdin
 
 
       - name: Baixar imagem do Fluig CLI
